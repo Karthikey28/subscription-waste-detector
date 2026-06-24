@@ -105,10 +105,7 @@ if st.session_state.expense_df is not None:
         "📄 View Raw Expense Data",
         expanded=False
     ):
-        st.dataframe(
-            df,
-            use_container_width=True
-        )
+        st.dataframe(df, width="stretch")
 
     reminders = get_renewal_reminders(df)
 
@@ -177,10 +174,7 @@ if st.session_state.expense_df is not None:
                 hole=0.55
             )
 
-            st.plotly_chart(
-                fig,
-                use_container_width=True
-            )
+            st.plotly_chart(fig, width="stretch")
 
         with right:
 
