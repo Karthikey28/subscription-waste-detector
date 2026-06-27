@@ -28,7 +28,15 @@ margin-bottom:20px;
 """, unsafe_allow_html=True)
 
 if "expense_df" not in st.session_state:
-    st.session_state.expense_df = None
+    st.session_state.expense_df = pd.DataFrame(
+        columns=[
+            "Date",
+            "Description",
+            "Amount",
+            "Category",
+            "RenewalDate"
+        ]
+    )
 
 if "ai_response" not in st.session_state:
     st.session_state.ai_response = ""
@@ -76,14 +84,9 @@ if uploaded_file:
         st.session_state.expense_df = pd.read_excel(
             uploaded_file
         )
-
 if st.sidebar.button("Add Expense"):
 
-    if (
-        st.session_state.expense_df is not None
-        and description
-        and amount > 0
-    ):
+    if description and amount > 0:
 
         st.session_state.expense_df = add_manual_expense(
             st.session_state.expense_df,
@@ -95,6 +98,12 @@ if st.sidebar.button("Add Expense"):
 
         st.sidebar.success(
             "Expense Added Successfully"
+        )
+
+    else:
+
+        st.sidebar.error(
+            "Please enter Description and Amount."
         )
 
 if st.session_state.expense_df is not None:
